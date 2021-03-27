@@ -356,8 +356,6 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="t1" destination="a6q-sl-C0c" id="ULH-Bs-DEc"/>
-                                    <outlet property="t2" destination="xD5-nx-fcA" id="QRw-QJ-nvf"/>
                                     <outlet property="t3" destination="L9f-Cb-bUV" id="kzR-1Q-2pu"/>
                                 </connections>
                             </tableViewCell>
@@ -371,7 +369,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KIV-pw-GPJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4787" y="108"/>
+            <point key="canvasLocation" x="4818.840579710145" y="123.88392857142857"/>
         </scene>
     </scenes>
     <resources>
