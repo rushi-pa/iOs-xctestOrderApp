@@ -1,22 +1,10 @@
 import UIKit
+var neworders = order.getInitialData()
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource {
-    
-    private var taskList : [ToDo] = [ToDo]()
-    private let dbHelper = DatabaseHelper.getInstance()
+
     @IBOutlet weak var coopick : UIPickerView!
     @IBOutlet weak var colv : UICollectionView!
     var cofeeCovers = [UIImage]();
-    private let validation: ValidationService
-       
-       init(validation: ValidationService) {
-           self.validation = validation
-           super.init(nibName: nil, bundle: nil)
-       }
-       
-       required init?(coder: NSCoder) {
-           self.validation = ValidationService()
-           super.init(coder: coder)
-       }
     var yourArray = [String](arrayLiteral: "Dark Roast","Dalgona", "Cappucino" , "Irish Creme","Cold Brew", "Or just an espresso would do")
    
     var colors = [UIColor](arrayLiteral: UIColor.red, UIColor.blue,  UIColor.green, UIColor.yellow, UIColor.orange ,UIColor.purple);
@@ -106,55 +94,41 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     //Special Instructions
     @IBOutlet weak var spec : UITextField!
+    
+    
+    //BUTOON SPECS
+    //var neworders = [order]();
    
 
     @IBAction func placeorder(){
-        do {
-            let noOfCoffee = try validation.validateUsername(self.noOfCoffee.text);
-            let spec = try validation.validatePassword(self.spec.text);
-                
-                if(noOfCoffee != nil && noOfCoffee != "" && spec != "" && spec != nil){
-                    
-                        let newTask = order(name : test ,  size : self.size , noOf: noOfCoffee, instruction: spec);
-                        self.dbHelper.insertTask(newTodo: newTask)
-                    presentAlert(with: "Order Completed")
-                    
-                } else {
-                    throw ValidationError.invalidvalue
-                }
-                
-            } catch {
-                present(error)
-            }
-        
+        if (!self.noOfCoffee.text!.isEmpty){
+        print("order place selected");
+       
+            neworders.append(order(name : test ,  size : self.size , noOf: noOfCoffee.text ?? "" , instruction: spec.text ?? ""));
+            print(neworders);
+            
+        } else{
+            //show error
+            self.showErrorAlert(errorMessage: "None of the inputs can be empty")
+        }
     }
-    
-    private func present(_ dismissableAlert: UIAlertController) {
-           let dismissAction = UIAlertAction(title: "Dismiss", style: .cancel)
-           dismissableAlert.addAction(dismissAction)
-           present(dismissableAlert, animated: true)
-       }
-       
-       func presentAlert(with message: String) {
-           let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-           present(alert)
-       }
-       
-       func present(_ error: Error) {
-           presentAlert(with: error.localizedDescription)
-       }
 
+func showErrorAlert(errorMessage : String){
+    let errorAlert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
+    errorAlert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+    self.present(errorAlert, animated: true, completion: nil)
+}
     
     //Button cancel specs
     @IBAction func cancel(){
         print("order canceled");
     }
-    private func fetchAllToDos(){
-        if (self.dbHelper.getAllTodos() != nil){
-            self.taskList = self.dbHelper.getAllTodos()!
-            print(taskList);
-        }else{
-            print(#function, "No data recieved from dbHelper")
-        }
-    }
+    
+    
+    
+    
+    //bus backchodi
+    
+    
+ 
 }
